@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:testes_app/styles.dart';
 
 import 'dark_theme_preferences.dart';
-import 'dark_theme_provider.dart';
+import 'provider/dark_theme_provider.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,7 +15,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  DarkThemeProvider themeChangeProvider = new DarkThemeProvider();
+  AppThemeProvider themeChangeProvider = new AppThemeProvider();
 
   @override
   void initState() {
@@ -24,8 +24,11 @@ class _MyAppState extends State<MyApp> {
   }
 
   void getCurrentAppTheme() async {
-    themeChangeProvider.darkTheme =
-        await themeChangeProvider.darkThemePreference.getTheme();
+//    themeChangeProvider.darkTheme =
+//        await themeChangeProvider.darkThemePreference.getTheme();
+
+    themeChangeProvider.appThemeEnum =
+    await themeChangeProvider.appThemePreference.getTheme();
   }
 
   @override
@@ -39,11 +42,11 @@ class _MyAppState extends State<MyApp> {
           },
         )
       ],
-      child: Consumer<DarkThemeProvider>(
+      child: Consumer<AppThemeProvider>(
         builder: (BuildContext context, value, Widget child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: Styles.themeData(themeChangeProvider.darkTheme, context),
+            theme: Styles.themeData(themeChangeProvider.appThemeEnum, context),
             home: content(),
           );
         },
@@ -54,7 +57,7 @@ class _MyAppState extends State<MyApp> {
   int _counter = 0;
 
   Future<void> _incrementCounter() async {
-    themeChangeProvider.darkTheme = !themeChangeProvider.darkTheme;
+    //themeChangeProvider.appThemeEnum = themeChangeProvider.appThemeEnum;
     setState(() {
       _counter++;
     });
